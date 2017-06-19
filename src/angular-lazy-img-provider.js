@@ -2,11 +2,14 @@ angular.module('angularLazyImg').provider('lazyImgConfig', function() {
   'use strict';
 
   this.options = {
-    offset       : 100,
-    errorClass   : null,
-    successClass : null,
-    onError      : function(){},
-    onSuccess    : function(){}
+    already     : false,
+    delayCheck  : 30,
+    delayWin    : 60,
+    offset      : 100,
+    errorClass  : null,
+    successClass: null,
+    onError     : function(){},
+    onSuccess   : function(){}
   };
 
   this.$get = function() {

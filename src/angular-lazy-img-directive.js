@@ -4,21 +4,19 @@ angular.module('angularLazyImg')
       'use strict';
 
       function link(scope, element, attributes) {
-        var lazyImage = new LazyImgMagic(element),
-            deregister = attributes.$observe('lazyImg', function (newSource) {
+        var lazyImage = new LazyImgMagic(element);
+        var cancelObserver = attributes.$observe('lazyImg', function (newSource) {
           if (newSource) {
-            deregister();
             lazyImage.setSource(newSource);
+            cancelObserver();
           }
         });
-        scope.$on('$destroy', function () {
-          lazyImage.removeImage();
-        });
-        $rootScope.$on('lazyImg.runCheck', function () {
-          lazyImage.checkImages();
-        });
-        $rootScope.$on('lazyImg:refresh', function () {
-          lazyImage.checkImages();
+        // scope.$on('$destroy', function () {
+        //   lazyImage.removeImage();
+        // });
+        var cancelForce = scope.$on('lazyImg:forceLoad', function () {
+          lazyImage.forceLoadImage();
+          cancelForce();
         });
       }
 
